@@ -1,5 +1,7 @@
-FROM python:3.8-slim
+# Use Python 3.10 slim
+FROM python:3.10-slim
 
+# Set working directory
 WORKDIR /app
 
 # Install system dependencies
@@ -17,8 +19,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project code
 COPY . .
 
-# Expose port
+# Expose FastAPI port
 EXPOSE 8000
 
-# Run the server
+# Start the API with uvicorn
 CMD ["uvicorn", "main_api:app", "--host", "0.0.0.0", "--port", "8000"]
