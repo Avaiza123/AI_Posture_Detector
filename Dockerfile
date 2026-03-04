@@ -23,4 +23,5 @@ COPY . .
 EXPOSE 8000
 
 # Start the API with uvicorn
-CMD uvicorn main_api:app --host 0.0.0.0 --port $PORT
+# 
+CMD ["python", "main_api.py"]
