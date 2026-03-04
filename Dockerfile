@@ -1,12 +1,8 @@
-# Use lightweight Python image
-FROM python:3.9-slim
-# Set working directory
+FROM python:3.8-slim
+
 WORKDIR /app
 
-# Copy requirements
-COPY requirements.txt .
-
-# Install system dependencies for headless OpenCV
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     libsm6 \
@@ -14,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     libxrender1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python packages
+# Copy and install Python dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project code
@@ -23,5 +20,5 @@ COPY . .
 # Expose port
 EXPOSE 8000
 
-# Start Uvicorn
+# Run the server
 CMD ["uvicorn", "main_api:app", "--host", "0.0.0.0", "--port", "8000"]
